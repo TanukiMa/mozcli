@@ -1,5 +1,5 @@
 {
-  "title": "Mozc CLI",
+  "title": "mozcli",
   "restart_start": "[{os}] Mozc 再起動中...",
   "killed": "  Killed: {proc}",
   "stopped": "  Stopped: {service}",

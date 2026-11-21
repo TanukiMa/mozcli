@@ -9,7 +9,7 @@ use std::thread;
 use std::time::Duration;
 
 #[derive(Parser)]
-#[command(name = "mozc-cli")]
+#[command(name = "mozcli")]
 #[command(author, version, about = "CLI tool to restart Mozc (Google Japanese Input)")]
 struct Args {
     #[arg(value_enum)]
@@ -49,7 +49,7 @@ struct Translations {
 }
 
 static FALLBACK_EN: Lazy<Translations> = Lazy::new(|| Translations {
-    title: "Mozc CLI".into(),
+    title: "mozcli".into(),
     restart_start: "[{os}] Restarting Mozc...".into(),
     killed: "  Killed: {proc}".into(),
     stopped: "  Stopped: {service}".into(),

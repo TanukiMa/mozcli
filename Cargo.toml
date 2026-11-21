@@ -1,11 +1,11 @@
 [package]
-name = "mozc-cli"
+name = "mozcli"
 version = "0.1.0"
 edition = "2021"
 authors = ["Matanuki"]
-description = "CLI tool to restart Mozc (Google Japanese Input) on Windows and macOS"
+description = "CLI tool to control Mozc-based Japanese IMEs (Mozc, Google Japanese Input) on Windows and macOS"
 license = "MIT"
-repository = "https://github.com/TanukiMa/mozc-cli"
+repository = "https://github.com/TanukiMa/mozcli"
 readme = "README.md"
 keywords = ["mozc", "ime", "japanese", "cli"]
 categories = ["command-line-utilities"]
