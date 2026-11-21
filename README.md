@@ -12,14 +12,13 @@ This tool was born from a conversation with a Mozc developer (yukawa):
 
 ## Features
 
-- Restart the IME converter / renderer / client with a single command
+- `start` / `stop` / `restart` the IME with a single command
 - Cross-platform (Windows + macOS)
-- Multilingual messages (Japanese / English) via JSON locale files
+- Multilingual messages (Japanese / English), embedded in the binary
 - Single binary written in Rust
 
 ### Roadmap
 
-- `start` / `stop` / `restart` for each supported IME
 - Support for Mozc-derived IMEs beyond Google Japanese Input (OSS Mozc builds, etc.)
 - `status` command
 
@@ -34,7 +33,6 @@ cargo build --release
 ```
 
 The binary will be at `target/release/mozcli` (or `mozcli.exe` on Windows).
-Keep the `locales/` directory next to the binary; without it, messages fall back to English.
 
 ### Cargo
 
@@ -45,15 +43,17 @@ cargo install --git https://github.com/TanukiMa/mozcli.git
 ## Usage
 
 ```bash
-# Restart the IME
-mozcli restart
+mozcli start            # start the IME server (Windows: see note below)
+mozcli stop             # stop the IME server and renderer
+mozcli restart          # stop, then start
 
-# Force English messages
-mozcli --lang en restart
-
-# Force Japanese messages
-mozcli --lang ja restart
+mozcli --ime google restart   # target one IME (default: every installed IME)
+mozcli --lang en restart      # force English messages (or --lang ja)
 ```
+
+Exit code is `0` on success and `1` if no IME was found or a command failed.
+
+On Windows, the IME server cannot be started directly. After `stop` or `restart`, it starts again automatically the next time you type, so `start` only checks that the IME is installed.
 
 ### Language detection
 
@@ -65,13 +65,15 @@ The tool selects the language based on:
 
 ## Supported IMEs and platforms
 
-Currently only Google Japanese Input process names are handled.
+| `--ime`  | IME                   |
+|----------|-----------------------|
+| `google` | Google Japanese Input |
 
-| Platform | Status        | Method                                                   |
-|----------|---------------|----------------------------------------------------------|
-| Windows  | Supported     | `taskkill /F /T` on known process names                  |
-| macOS    | Supported     | `launchctl stop` / `start` on matching launchd services  |
-| Linux    | Not supported | —                                                        |
+| Platform | Status        | stop                         | start                               |
+|----------|---------------|------------------------------|-------------------------------------|
+| Windows  | Supported     | `taskkill /F /T` per process | automatic on next input             |
+| macOS    | Supported     | `launchctl stop <label>`     | `launchctl start <label>`           |
+| Linux    | Not supported | —                            | —                                   |
 
 ## Contributing
 
